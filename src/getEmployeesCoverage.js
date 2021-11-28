@@ -17,12 +17,15 @@ const attData = (employed) => {
 
   return newEmpl;
 };
+
+const mapFunc = (oF) => oF.map((c) => ({ fullName: `${c.firstName} ${c.lastName}`,
+  id: c.id,
+  locations: [],
+  species: c.responsibleFor }));
+
 const nameemply = (o) => {
   const oF = employees.filter((c) => c.firstName === o.name || c.lastName === o.name);
-  let rI = oF.map((c) => ({ fullName: `${c.firstName} ${c.lastName}`,
-    id: c.id,
-    locations: [],
-    species: c.responsibleFor }));
+  let rI = mapFunc(oF);
   rI = attData(rI);
   return rI;
 };
@@ -30,10 +33,7 @@ const nameemply = (o) => {
 const allEmpl = (obj) => {
   const fix = [];
   const nI = fix;
-  const rI = employees.map((cI) => ({ fullName: `${cI.firstName} ${cI.lastName}`,
-    id: cI.id,
-    locations: [],
-    species: cI.responsibleFor }));
+  const rI = mapFunc(employees);
   rI.forEach((a) => {
     nI.push(attData([a]));
   });
@@ -49,10 +49,7 @@ function getEmployeesCoverage(obj) {
   if (obj.id) {
     const oF = employees.filter((cEmployer) => cEmployer.id === obj.id);
     if (oF.length === 0) throw new Error('Informações inválidas');
-    let returnedInfos = oF.map((cI) => ({ fullName: `${cI.firstName} ${cI.lastName}`,
-      id: cI.id,
-      locations: [],
-      species: cI.responsibleFor }));
+    let returnedInfos = mapFunc(oF);
     returnedInfos = attData(returnedInfos);
     return returnedInfos;
   }
